@@ -1,0 +1,26 @@
+body {
+    margin: 20px 20px 30px 20px;
+    padding:0;
+}
+#body{
+    padding: 0px;
+}
+hr{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.mt{
+    margin-top: 30px;
+}
+.mtfive{
+    margin-top: 50px;
+}
+.inline{
+    display: inline;
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>iscar</title>
+        <link rel="stylesheet" href="css/frozen.css">
+        <link rel="stylesheet" href="iconfont/iconfont.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="http://tw-member.iscarmg.com/app/css/user.css" type="text/css">
+        <script type="text/javascript">
+          _atrk_opts = { atrk_acct:"1/G9i1aoZM00yu", domain:"iscarmg.com",dynamic: true};
+          (function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+        </script>
+        <noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=1/G9i1aoZM00yu" style="display:none" height="1" width="1" alt="" /></noscript>
+        <!-- End Alexa Certify Javascript -->
+        <!--google analytics-->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-38808246-4', 'auto');
+          ga('create', 'UA-38808246-6', 'auto');
+          ga('send', 'pageview');
+        </script>
+        <!--end of google analytics-->
+        <style type="text/css">
+            @media (max-width: 992px) {
+                .add_div {
+                    position:fixed;
+                    z-index:100;
+                    color:#FFF;
+                    bottom:0;
+                    background-color:#ff5400;
+                    width:100%;
+                    line-height: 45px;
+                }
+                .float{
+                    width: 49%;float: left;text-align: center;display: none;
+                }
+            }
+            @media (min-width: 992px) {
+                .add_div {
+                    position:fixed;
+                    z-index:100;
+                    color:#FFF;
+                    bottom:0;
+                    background-color:#ff5400;
+                    width:50%;
+                    line-height: 45px;
+                }
+                .float{
+                    width: 49%;float: left;text-align: center;display: none;
+                }
+            }
+
+        </style>
+    </head>
+    <body ontouchstart id="commentary_list" v-cloak>
+    <div class="hot-key"></div>
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-fanhui" onclick="history.back()"></i><h1>{{language.我的最爱}}</h1>
+            <!--<div class="ui-avatar-s user_icon"></div>-->
+            <div class="ui-avatar-s iscar_member_icon  iscar_member_login"></div>
+        </header>
+
+        <section id="window"  class="ui-container" style="margin-bottom: 45px;background-color: #fff">
+            <ul v-for="item in content" class="ui-list ui-list-link">
+                <li class="ui-border-b del" style="cursor: pointer;">
+                    <div class="add-myfavorite">
+                        <div class="selection my_img_no"></div>
+                    </div>
+                    <div class="ui-list-img new_car_search ">
+                        <span :style="item.car_img" class="new_div"></span>
+                    </div>
+                    <div class="ui-list-info">
+                        <h1 class="ui-nowrap font_size16">
+                            {{item.brand_name}}
+                            <span v-if="item.brand_name&&item.model_name"><br></span>
+                            {{item.model_name}}
+                        </h1>
+                        <h1 class="ui-nowrap font_size16">
+                            {{item.style_name}}
+                        </h1>
+                        <p class="ui-nowrap money"><span class="red">{{item.ci_sale_price?car_price(item.ci_sale_price):'未公佈價格'}}</span><span v-if="item.ci_sale_price">{{language.wan}}</span></p>
+                        <!--<p class="ui-nowrap ui-border-t">{{language.平均油耗}}：<span class="black">{{item.ci_average_consumption}}</span></p>-->
+                        <!--<p class="ui-nowrap ui-border-t">{{language.年份}}：<span class="black">{{item.ci_car_year_style}}年</span></p>-->
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <div class="add_div">
+            <div id="delete" class="float">
+                删除
+            </div>
+            <div class="float Cancellation" style="border-left:solid 1px #fff">
+                取消
+            </div>
+        </div>
+        <a class="ui-icon-cion49 go-top " id="gotop" ></a>  <!--返回顶部-->
+        <a class="ui-icon-search search " id="search" ></a>   <!--搜索-->
+        <a class="collection icon_del"></a>
+        <a class="ui-icon-shouyeshouye go-index" id="go-index" ></a><!--返回首页-->
+    </body>
+    <script src="js/config.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="http://tw-member.iscarmg.com/app/libs/jquery-ui.js"></script>
+    <script src="http://tw-member.iscarmg.com/app/libs/jquery.ui.touch-punch.min.js"></script>
+    <script src="http://tw-member.iscarmg.com/app/libs/js-cookie/src/js.cookie.js"></script>
+    <script type="text/javascript">
+        document.write('<script type="text/javascript" src="http://' + server_type + _region + '-member.iscarmg.com/app/js/user.js"><\/script>');
+    </script>
+    <script type="text/javascript">
+        document.write('<script type="text/javascript" src="http://' + server_type + _region + '-member.iscarmg.com/app/js/iPhone.js"><\/script>');
+    </script>
+    <script type="text/javascript">
+        document.write('<script type="text/javascript" src="http://' + server_type + _region + '-member.iscarmg.com/app/js/generate_murid.js"><\/script>');
+    </script>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/frozen.js"></script>
+    <script src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="js/language.js"></script>
+    <script src="story/iscaradmin/js/layer/layer.js"></script>
+    <script src="js/lib/sha256.js"></script>
+    <script src="js/gotop.js"></script>
+    <script>
+        $('#window').css('height',$(window).height())
+      var commentary_list= new Vue({
+        el:'#commentary_list',
+        data: {
+          content:{},
+          language:language.my_favorite,
+          defaultImg:defaultImg
+        },
+        watch:{
+          content:function () {
+            $('.add-myfavorite').hide();
+          }
+        },
+        methods: {
+          car_price: function (e) {
+            return e.replace(".00","")
+          }
+        }
+      });
+      $.ajax({
+        url:'service/?a=collection_list',
+        type:'get',
+        dataType:'html',
+        error: function(){
+          layer.msg('请登入',{time:1000});
+          // window.location.href='index.php';
+        },
+        success: function(msg){
+          var post = eval("("+msg+")");
+          $(post).each(function (k,v) {
+            v.car_img="background-image:url("+(v.car_img?("/story/iscaradmin/"+v.car_img):defaultImg)+");background-size: 100%;margin-top: 15px;"
+          });
+          commentary_list.$set('content',post)
+        }
+      });
+      $(document).on('click','.new_car_search',function (e) {
+        var len=($('.new_car_search').index(this));
+        window.location.href='car_detail.php?car_id='+commentary_list.content[len].car_id;
+      });
+
+      $('.Cancellation').click(function () {
+        $('.add-myfavorite').hide();
+        $('.float').slideToggle("slow");
+      });
+      $(document).on('click', '.selection', function(e){
+        var sel=$('.selection');
+        var len=(sel.index(this));
+        if(sel.eq(len).hasClass('my_img_no')){
+          sel.eq(len).removeClass('my_img_no').addClass('my_img_yes');
+        }else {
+          sel.eq(len).removeClass('my_img_yes').addClass('my_img_no');
+        }
+      });
+      $('#delete').click(function () {
+        var d=[];
+        $('.selection').each(function (k,v) {
+          if($(this).hasClass('my_img_yes')){
+            d.push(+commentary_list.content[k].car_id);
+            $('.del').eq(k).hide();
+          }
+        });
+        $.ajax({
+          url:'service/?a=collection_deleteall&car_id='+JSON.stringify(d),
+          type:'post',
+          dataType:'json',
+          error: function(err){
+            console.log(err);
+          },
+          success: function(msg){
+            if(localStorage.l==3){
+              layer.msg('选中的项目已从我的最爱记录中移除',{time:1000});
+            }else {
+              layer.msg('選中的項目已從我的最愛記錄中移除',{time:1000});
+            }
+            $('.add-myfavorite').hide();
+            $('.float').slideToggle("slow");
+          }
+        });
+      });
+      $('.icon_del').click(function () {
+        $('.add-myfavorite').fadeToggle();
+        $('.float').slideToggle("slow");
+      });
+        userAvatarInit();
+    </script>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>iscar</title>
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/frozen.css">
+        <link rel="stylesheet" href="iconfont/iconfont.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="http://tw-member.iscarmg.com/app/css/user.css" type="text/css">
+        <script type="text/javascript">
+          _atrk_opts = { atrk_acct:"1/G9i1aoZM00yu", domain:"iscarmg.com",dynamic: true};
+          (function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+        </script>
+        <noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=1/G9i1aoZM00yu" style="display:none" height="1" width="1" alt="" /></noscript>
+        <!-- End Alexa Certify Javascript -->
+        <!--google analytics-->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-38808246-4', 'auto');
+          ga('create', 'UA-38808246-6', 'auto');
+          ga('send', 'pageview');
+        </script>
+        <!--end of google analytics-->
+    </head>
+    <body ontouchstart id="search_add" v-cloak>
+    <div class="hot-key"></div>
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-fanhui" onclick="history.back()"></i><h1>{{language.搜寻结果}}</h1>
+            <!--<div class="ui-avatar-s user_icon"></div>-->
+            <div class="ui-avatar-s iscar_member_icon  iscar_member_login"></div>
+        </header>
+
+        <section class="ui-container" style="background-color: #fff">
+            <div class="selected clearfix">
+                <span class="gray selected-tit">{{language.已选}}</span>
+                <ul class="clearfix">
+                    <li class="ui-border" v-if="data.brand"  v-on:click="brands($index)" ><i class="ui-icon-guanbi"></i>
+                        <p>{{data.brand}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.key_content" v-on:click="key_content()"><i class="ui-icon-guanbi"></i>
+                        <p>{{data.key_content}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.car_model" v-on:click="car_models($index)" ><i class="ui-icon-guanbi"></i>
+                        <p>{{data.car_model}}</p>
+                    </li>
+                    <li class="ui-border" v-show="data.consumption" v-on:click="consumptions()" ><i class="ui-icon-guanbi"></i>
+                        <p v-if="data.consumption=='25'">25km/L以上</p>
+                        <p v-else>{{data.consumption}}km/L</p>
+                    </li>
+                    <li v-if="data.Price_sector" class="ui-border" v-for="item in data.Price_sector" v-on:click="Price_sectors($index)" ><i class="ui-icon-guanbi"></i>
+                        <p v-if="item=='-5'">5万以下</p>
+                        <p v-if="item=='100-'">100万以上</p>
+                        <p v-if="item=='-80'">80萬以下</p>
+                        <p v-if="item=='200-'">200萬以上</p>
+                        <p v-if="item=='200+'">未公佈價格</p>
+                        <p v-if="item!='100-'&&item!='-5'&&item!='200-'&&item!='-80'&&item!='200+'">{{item}}{{language.wan}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.carsource" v-for="item in data.carsource" v-on:click="carsources($index)" ><i class="ui-icon-guanbi"></i>
+                        <p v-for="items in content.carsource" v-if="item==items.carsource_id">{{items.value}}</p>
+                    </li>
+
+                    <li class="ui-border" v-if="data.caryear" v-for="item in data.caryear" v-on:click="caryear($index)"><i class="ui-icon-guanbi"></i>
+                        <p v-for="items in content.caryear" v-if="item==items.ci_car_year_style">{{items.ci_car_year_style}}</p>
+                    </li>
+
+                    <li class="ui-border" v-if="data.carbody" v-for="item in data.carbody" v-on:click="carbodys($index)" ><i class="ui-icon-guanbi"></i>
+                        <p v-for="items in content.carbody" v-if="item==items.cbt_id">{{items.fullname}}</p>
+                    </li>
+
+                    <li class="ui-border" v-if="data.passenger" v-for="item in data.passenger" v-on:click="passengers($index)" ><i class="ui-icon-guanbi"></i>
+                        <p>{{item}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.cardoor" v-for="item in data.cardoor" v-on:click="cardoors($index)" ><i class="ui-icon-guanbi"></i>
+                        <p>{{item}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.fueltype" v-for="item in data.fueltype" v-on:click="fueltypes($index)" ><i class="ui-icon-guanbi"></i>
+                        <p v-for="items in content.fueltype" v-if="item==items.fueltype">{{items.value}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.transmission" v-for="item in data.transmission" v-on:click="transmissions($index)" ><i class="ui-icon-guanbi"></i>
+                        <p v-for="items in content.transmission" v-if="item==items.transmission_id">{{items.value}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.displacement" v-for="item in data.displacement" v-on:click="displacements($index)" ><i class="ui-icon-guanbi"></i>
+                        <p>{{item}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.equiptment" v-for="item in data.equiptment" v-on:click="equiptments($index)" ><i class="ui-icon-guanbi"></i>
+                        <p>{{item}}</p>
+                    </li>
+                    <li class="ui-border" v-if="data.drivemode" v-for="item in data.drivemode" v-on:click="drivemodes($index)" ><i class="ui-icon-guanbi"></i>
+                        <p v-for="items in content.drive_mode" v-if="item==items.drive_mode_id">{{items.value}}</p>
+                    </li>
+                </ul>
+            </div>
+            <!--已选条件-->
+            
+            <ul class="ui-tab-nav ui-border-b" id="sorting">
+                <li class="ui-border-r" id="sorting_a">
+                   {{language.默认顺序}}
+                    <i class="fa  fa-angle-down"></i>
+                </li>
+                <li class="ui-border-r" id="sorting_b">
+                   {{ language.价格高低}}
+                    <i class="fa  fa-angle-down" style="display: none"></i>
+                </li>
+                <li id="sorting_c">
+                    {{language.最新生产}}
+                    <i class="fa  fa-angle-down" style="display: none"></i>
+                </li>
+            </ul>
+               
+        	<section class="che">
+            	<div class="title_small"><span>{{language.搜寻结果}}</span></div>
+                <ul class="ui-list ui-list-link car">
+                    <li v-for="item in car_list"  class="ui-border-t" style="cursor: pointer;">
+                        <div class="ui-list-img new_car_search ">
+                            <!-- <span :style="item.car_img" class="new_div"></span> -->
+                            <img :style="item.car_style" class="new_div" src="{{item.car_img}}">
+                        </div>
+
+                        <div class="ui-list-info">
+                            <h1 class="ui-nowrap font_size16">
+                                {{item.brand_name}}
+                                <span v-if="item.brand_name&&item.model_name"><br></span>
+                                {{item.model_name}}
+                            </h1>
+                            <h1 class="ui-nowrap font_size16">
+                                {{item.style_name}}
+                            </h1>
+                            <p class="ui-nowrap money"><span class="red">{{item.ci_sale_price?car_price(item.ci_sale_price):'未公佈價格'}}</span><span v-if="item.ci_sale_price">{{language.wan}}</span>&nbsp;&nbsp;&nbsp;{{item.ci_car_year_style}}</p>
+                            <!--<p class="ui-nowrap ui-border-t">{{language.平均油耗}}：<span class="black">{{item.ci_average_consumption}}</span></p>-->
+                            <!--<p class="ui-nowrap ui-border-t">{{language.年份}}：<span class="black">{{item.ci_car_year_style}}年</span></p>-->
+                        </div>
+                    </li>
+                    <li id="search_loading"><div style="text-align: center;width: 95%">載入中……</div></li>
+                    <li id="search_result"><div style="text-align: center;width: 95%;">{{language.查询结果}}</div></li>
+                </ul>
+                <div class="ui-nowrap-flex ui-whitespace magin_b magin_t"><button id="btn-ck">{{language.查看更多}}</button></div>
+
+        	</section>
+            <!--查询结果-->
+
+        	<section class="hot_model" v-if="hot_carmodel.length!=0">
+            	<div class="title_small"><span>{{language.热门车系}}</span></div>
+                <ul class="selected clearfix hot_models">
+                    <li v-for="item in hot_carmodel"><p>{{item.hot_carmodel}}</p></li>
+                </ul>
+        	</section>
+            <!--热门车型-->
+
+            <section id="news" v-if="new_list[0]">
+            	<div class="title_small new"><span>{{language.相关新闻}}</span></div>
+                <ul>
+                    <li v-for="item in new_list">
+                        <a target="_blank" onclick="toWeb('{{item.article_url}}')">
+                            <img :src="item.imagepath">
+                            <div class="ui-nowrap ui-whitespace title">{{item.title}}</div>
+                        </a>
+                    </li>
+                </ul>
+            </section>  
+            <!--相关新闻-->
+                
+        </section>
+        <a class="ui-icon-cion49 go-top " id="gotop" ></a>  <!--返回顶部-->
+        <a class="ui-icon-search search " id="search"></a>   <!--搜索-->
+        <a class="ui-icon-shouyeshouye go-index" id="go-index" ></a><!--返回首页-->
+    </body>
+    <script src="js/config.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="http://tw-member.iscarmg.com/app/libs/jquery-ui.js"></script>
+    <script src="http://tw-member.iscarmg.com/app/libs/jquery.ui.touch-punch.min.js"></script>
+    <script src="http://tw-member.iscarmg.com/app/libs/js-cookie/src/js.cookie.js"></script>
+    <script type="text/javascript">
+        document.write('<script type="text/javascript" src="http://' + server_type + _region + '-member.iscarmg.com/app/js/user.js"><\/script>');
+    </script>
+    <script type="text/javascript">
+        document.write('<script type="text/javascript" src="http://' + server_type + _region + '-member.iscarmg.com/app/js/iPhone.js"><\/script>');
+    </script>
+    <script type="text/javascript">
+        document.write('<script type="text/javascript" src="http://' + server_type + _region + '-member.iscarmg.com/app/js/generate_murid.js"><\/script>');
+    </script>
+    <script type="text/javascript" src="js/Extraction.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/frozen.js"></script>
+    <script src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="js/lib/sha256.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/gotop.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('#btn-ck').hide();
+        $('#search_result').hide();
+        var start=0;
+        var car_list=[];
+        var datas={};
+        var new_list=[];
+        var sorting='';
+        function Condition() {
+          datas={
+            'Price_sector': sessionStorage.Price_sector,
+            'consumption':sessionStorage.consumption,
+            'carsource':sessionStorage.carsource,
+            'caryear':sessionStorage.caryear,
+            'carbody':sessionStorage.carbody,
+            'passenger':sessionStorage.passenger,
+            'cardoor': sessionStorage.cardoor,
+            'transmission': sessionStorage.transmission,
+            'fueltype': sessionStorage.fueltype,
+            'displacement': sessionStorage.displacement,
+            'equiptment': sessionStorage.equiptment,
+            'drivemode': sessionStorage.drivemode,
+            'key_content': sessionStorage.key_content,
+            'brand':sessionStorage.brand,
+            'car_model':sessionStorage.car_model,
+            'start':start,
+            'h':h,
+            'sorting':sorting
+          };
+        }
+        function ajaxs(e) {
+          Condition();
+          $.ajax({
+            url:'service/?a=car_list&l='+localStorage.l,
+            type:'post',
+            data:datas,
+            dataType:'html',
+            error: function(){
+              console.log('Error loading document');
+              $('#btn-ck').hide();
+              $('#search_loading').hide()
+              $('#search_result').show();
+            },
+            success: function(msg){
+              $('#search_loading').hide()
+              var post = eval("("+msg+")");
+              if (status==0 && post.car_list.length==0) {
+                $('#search_result').show();
+              }
+              if (post.car_list.length<10){
+                $('#btn-ck').hide();
+              }else {
+                $('#btn-ck').show();
+              }
+              $(post.car_list).each(function (k,v) {
+                v.car_img=v.car_img?("/story/iscaradmin/"+v.car_img):defaultImg;
+                v.car_style="margin-top: 15px;";
+              });
+              car_list=car_list.concat(post.car_list);
+              search.$set('car_list',car_list);
+              search.$set('hot_carmodel',post.hot_carmodel);
+              if(search.car_list.length!=0) addnew(String(search.car_list[0].tag_id));
+            }
+          })
+        }
+        var h=0;
+        var search= new Vue({
+          el:'#search_add',
+          data: {
+            content:localStorage.content?JSON.parse(localStorage.content):'',
+            data:data,
+            car_list:[],
+            hot_carmodel:{},
+            new_list:{},
+            language:language.search,
+            isphone:'',
+            defaultImg:defaultImg
+          },
+          watch:{
+            content:function () {
+              //判断是否为移动端
+              var isPC = function ()
+              {
+                var userAgentInfo = navigator.userAgent.toLowerCase();
+                var Agents = new Array("android", "iphone", "symbianOS", "windows phone", "ipad", "ipod");
+                var flag = true;
+                for (var v = 0; v < Agents.length; v++) {
+                  if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+                }
+                return flag;
+              };
+              var isPC = isPC();
+              if(!isPC){
+                search.isphone=true;
+              }else {
+                search.isphone=false;
+              }
+            }
+          },
+          methods: {
+            car_price: function (e) {
+              return e.replace(".00","")
+            },
+            brands:function (e) {
+              data.brand='';
+              sessionStorage.brand='';
+              search.$set('data.brand',data.brand);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            key_content:function (e) {
+              data.key_content='';
+              sessionStorage.key_content='';
+              search.$set('data.key_content',data.key_content);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            car_models:function (e) {
+              data.car_model='';
+              sessionStorage.car_model='';
+              search.$set('data.car_model',data.car_model);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            Price_sectors:function (e) {
+              data.Price_sector.splice(e,1);
+              sessionStorage.Price_sector=JSON.stringify(data.Price_sector);
+              search.$set('data.Price_sector',data.Price_sector);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            consumptions:function (e) {
+              sessionStorage.consumption='';
+              data.consumption='';
+              search.$set('data.consumption',data.consumption);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            carsources:function (e) {
+              data.carsource.splice(e,1);
+              sessionStorage.carsource=JSON.stringify(data.carsource);
+              search.$set('data.carsource',data.carsource);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            caryear:function (e) {
+              data.caryear.splice(e,1);
+              sessionStorage.caryear=JSON.stringify(data.caryear);
+              search.$set('data.caryear',data.caryear);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            carbodys:function (e) {
+              data.carbody.splice(e,1);
+              sessionStorage.carbody=JSON.stringify(data.carbody);
+              search.$set('data.carbody',data.carbody);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            passengers:function (e) {
+              data.passenger.splice(e,1);
+              sessionStorage.passenger=JSON.stringify(data.passenger);
+              search.$set('data.passenger',data.passenger);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            cardoors:function (e) {
+              data.cardoor.splice(e,1);
+              sessionStorage.cardoor=JSON.stringify(data.cardoor);
+              search.$set('data.cardoor',data.cardoor);
+              start=0;
+              car_list=[];
+              ajaxs();
+            } ,
+            fueltypes:function (e) {
+              data.fueltype.splice(e,1);
+              sessionStorage.fueltype=JSON.stringify(data.fueltype);
+              search.$set('data.fueltype',data.fueltype);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            transmissions:function (e) {
+              data.transmission.splice(e,1);
+              sessionStorage.transmission=JSON.stringify(data.transmission);
+              search.$set('data.transmission',data.transmission);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            displacements:function (e) {
+              data.displacement.splice(e,1);
+              sessionStorage.displacement=JSON.stringify(data.displacement);
+              search.$set('data.displacement',data.displacement);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            equiptments:function (e) {
+              data.equiptment.splice(e,1);
+              sessionStorage.equiptment=JSON.stringify(data.equiptment);
+              search.$set('data.equiptment',data.equiptment);
+              start=0;
+              car_list=[];
+              ajaxs();
+            },
+            drivemodes:function (e) {
+              data.drivemode.splice(e,1);
+              sessionStorage.drivemode=JSON.stringify(data.drivemode);
+              search.$set('data.drivemode',data.drivemode);
+              start=0;
+              car_list=[];
+              ajaxs();
+            }
+          }
+        });
+
+        ajaxs();
+        $(document).on('click','#sorting',function (e) {
+          sorting=e.target.getAttribute('id');
+          $('.fa').hide();
+          if (h=='0'){
+            h=1;
+            $('#'+sorting+'>.fa').removeClass('fa-angle-down').addClass('fa-angle-up');
+          }else {
+            h=0;
+            $('#'+sorting+'>.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
+          }
+          $('#'+sorting+'>.fa').show();
+          start=0;
+          car_list=[];
+          ajaxs();
+        }) ;
+
+        $(document).on('click','.hot_models li',function (e) {
+          sessionStorage.clear();
+          sessionStorage.car_model=$(this).text();
+          window.location.href=window.location.href;
+        }) ;
+
+        $('#btn-ck').click(function () {
+          $(this).hide();
+          $('#search_loading').show()
+          start+=10;
+          ajaxs()
+        });
+//新闻
+        function addnew(e) {
+          var newdata = {
+            'menu_id':'',
+            'tag_id':e||'',
+            'startid': '',
+            'queryamount': '5'
+          };
+
+          $.ajax({
+            contentType: "application/json; charset=utf-8",
+            type: 'POST',
+            url: 'http://tw-app.iscarmg.com/news/newslistquery',
+            data: JSON.stringify(JSON.stringify(newdata)),
+            dataType: 'json',
+            success: function (result) {
+              var new_list=result.newslistqueryresult.newslistarray;
+              if(new_list&&new_list[0]!=undefined){
+                $(new_list).each(function (k,v) {
+                  v.title=decodeURI(v.title);
+                  v.article_url=decodeURIComponent(v.article_url);
+                  v.catname=decodeURI(v.catname);
+                  v.created_by=decodeURI(v.created_by);
+                  v.createdate=decodeURI(v.createdate);
+                  v.id=decodeURI(v.id);
+                  v.imagepath=decodeURIComponent(v.imagepath);
+                })
+              }else {
+                $('#news').remove();
+              }
+              search.$set('new_list',new_list)
+            },
+            error: function (result) {
+              console.log(result)
+            }
+          });
+        }
+
+        $(document).on('click','.ui-border-t',function (e) {
+          var len=($('.ui-border-t').index(this));
+          window.location.href='car_detail.php?car_id='+search.car_list[len].car_id
+        });
+        $(document).on('click','.newpage',function (e) {
+          var len=($('.newpage').index(this));
+          openNewPage(search.new_list[len].article_url)
+        });
+      });
+      userAvatarInit();
+    </script>
+</html>
